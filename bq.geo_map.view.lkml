@@ -46,7 +46,7 @@ view: bq_logrecno_bg_map {
       WHERE
         sumlevel in ('140', '150')
       GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ;;
-    persist_for: "10000 hours"
+#     persist_for: "10000 hours"
   }
   dimension: row_id {sql: ${TABLE}.row_id;;
     primary_key:yes
@@ -99,7 +99,7 @@ view: bq_logrecno_bg_map {
   dimension: county {
     group_label: "County"
     label: "County FIPS Code"
-    sql: CONCAT(${state}, ${TABLE}.county_fips_code);;
+    sql:  LTRIM(CONCAT(${state}, ${TABLE}.county_fips_code), "0") ;;
     map_layer_name: us_counties_fips
     drill_fields: [tract, block_group]
     suggest_persist_for: "120 hours"
